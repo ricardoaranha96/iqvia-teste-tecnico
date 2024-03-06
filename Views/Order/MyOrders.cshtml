@@ -1,0 +1,45 @@
+﻿@model Order[]
+
+@{
+    ViewData["Title"] = "Meus Pedidos";
+}
+
+<div class="container">
+    <h1 class="text-center">Meus Pedidos</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Produtos</th>
+                <th>Valor Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(Order order in Model)
+            {
+                decimal totalValue = 0;               
+                
+                <tr>
+                    <td class="align-middle">
+                        @order.Id
+                    </td>
+                    <td>
+                        <div class="d-flex flex-column gap-4">
+                            @foreach (OrderProduct orderProduct in order.OrdersProducts)
+                            {
+                                totalValue += orderProduct.TotalPrice;                            
+                                <div class="d-flex align-items-center gap-4">
+                                    <img src="https://via.placeholder.com/50x50" />
+                                    <div>@orderProduct.Product.Name - @orderProduct.Quantity Unidade(s) - R$ @orderProduct.TotalPrice</div>
+                                </div>                            
+                            }
+                        </div>
+                    </td>
+                    <td class="align-middle">
+                        R$ @totalValue
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

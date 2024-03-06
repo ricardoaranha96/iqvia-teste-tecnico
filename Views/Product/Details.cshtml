@@ -1,0 +1,23 @@
+﻿@model Product
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="d-flex gap-4 flex-wrap flex-xxl-nowrap justify-content-center">
+    <img src="https://via.placeholder.com/600x600" />
+    <div>
+        <h1 class="text-center text-xxl-start">@Model.Id - @Model.Name</h1>        
+        <h2 class="text-center text-xxl-start">@Model.getProductTypeName()</h2>
+        <div>@Model.Description</div>
+        <div class="d-flex flex-column gap-2 mt-4">
+            <div class="fw-bold fs-4">R$ @Model.Price</div>
+            <div>à vista no Pix ou Boleto</div>
+            <div>Entrega grátis</div>
+            <form method="post" asp-action="AddProduct" asp-controller="Order">
+                <input type="hidden" name="ProductId" value="@Model.Id" />
+                <button type="submit" class="btn btn-success w-100">Comprar</button>
+            </form>
+        </div>
+    </div>
+</div>

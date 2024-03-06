@@ -1,0 +1,80 @@
+﻿@model Order
+
+@{
+    ViewData["Title"] = "Carrinho de Compras";
+    decimal totalValue = 0;
+}
+
+<div class="container">
+    <h1 class="text-center">@ViewData["Title"]</h1>
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Valor Unitário</th>
+                <th>Valor Total</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (OrderProduct orderProduct in Model.OrdersProducts)
+            {
+                {
+                    totalValue += orderProduct.TotalPrice;
+                }
+                <tr>
+                    <td class="fw-bold fs-4 align-middle">
+                        <div class="d-flex align-items-center gap-4">
+                            <img src="https://via.placeholder.com/100x100" />
+                            <div>@orderProduct.Product.Name</div>
+                        </div>
+                    </td>
+                    <td class="align-middle">
+                        <form method="post" asp-action="UpdateProductQuantity" asp-controller="Order">
+                            <input type="hidden" name="ProductId" value="@orderProduct.ProductId" />
+                            <select name="Quantity" class="form-control" style="max-width: 80px" onchange="this.closest('form').submit()">
+                                @for(var i = 1; i<=5; i++){
+                                    @if(i == orderProduct.Quantity)
+                                    {
+                                        <option selected value="@i">@i</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@i">@i</option>
+                                    }
+                                }                                
+                            </select>
+                        </form>
+                    </td>
+                    <td class="align-middle">
+                        R$ @orderProduct.UnitPrice
+                    </td>
+                    <td class="align-middle">
+                        R$ @orderProduct.TotalPrice
+                    </td>
+                    <td class="align-middle">
+                        <form method="post" asp-action="RemoveProduct" asp-action="Order" asp-route-id="@orderProduct.ProductId">
+                            <button type="submit" class="btn btn-danger">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 256 256">
+                                    <path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96Zm96,168H64V64H192ZM112,104v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z"></path>
+                                </svg>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-end">
+        <div>
+            <div>
+                Total:
+                <div class="fs-4 fw-bold">R$ @totalValue</div>
+            </div>
+            <form method="post" asp-action="FinishOrder" asp-controller="Order">
+                <button type="submit" class="btn btn-success mt-2">Finalizar Compra</button>
+            </form>            
+        </div>
+    </div>
+</div>
