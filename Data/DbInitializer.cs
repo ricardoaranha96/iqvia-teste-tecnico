@@ -6,7 +6,7 @@ namespace TesteTecnico.Data
     {
         public static void Initialize(EcommerceContext context)
         {
-            context.Database.EnsureCreated();
+            //context.Database.EnsureCreated();
             DbInitializer.seedProducts(context);
         }
 

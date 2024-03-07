@@ -2,20 +2,29 @@
 using TesteTecnico.Data;
 using Microsoft.EntityFrameworkCore;
 using TesteTecnico.Models;
+using Microsoft.AspNetCore.Identity;
+using TesteTecnico.Areas.Identity.Data;
+using System.Security.Claims;
 
 namespace TesteTecnico.Controllers
 {
     public class OrderController: Controller
     {
         private readonly ILogger<OrderController> _logger;
-
         private readonly EcommerceContext _context;
+        private readonly UserManager<TesteTecnicoUser> _userManager;
+        private readonly SignInManager<TesteTecnicoUser> _signInManager;
+        IHttpContextAccessor _httpContextAccessor;
 
-
-        public OrderController(ILogger<OrderController> logger, EcommerceContext context)
+        public OrderController(ILogger<OrderController> logger, 
+            EcommerceContext context, UserManager<TesteTecnicoUser> userManager, IHttpContextAccessor httpContextAccessor,
+            SignInManager<TesteTecnicoUser> signInManager)
         {
             _logger = logger;
             _context = context;
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _httpContextAccessor = httpContextAccessor;
         }
         public IActionResult Cart()
         {
@@ -110,6 +119,7 @@ namespace TesteTecnico.Controllers
             Order order = this.getSessionOrder();
             order.Status = OrderStatuses.AWAITING_PAYMENT;
             order.FinishedAt = DateTime.Now;
+            order.UserId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
             _context.Orders.Update(order);
             _context.SaveChanges();
             return RedirectToAction("Success", new { id = order.Id });
@@ -147,9 +157,15 @@ namespace TesteTecnico.Controllers
 
         public IActionResult MyOrders()
         {
+            if (!_signInManager.IsSignedIn(_httpContextAccessor.HttpContext?.User))
+            {
+                return Unauthorized();
+            }
+            var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
             Order[] orders = _context.Orders
                 .Include(o => o.OrdersProducts)
                 .ThenInclude(op => op.Product)
+                .Where(o => o.UserId == userId)
                 .ToArray();
             return View(orders);
         }

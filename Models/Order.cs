@@ -1,4 +1,6 @@
-﻿namespace TesteTecnico.Models
+﻿using TesteTecnico.Areas.Identity.Data;
+
+namespace TesteTecnico.Models
 {
     public enum OrderStatuses
     {
@@ -9,7 +11,11 @@
     public class Order
     {
         public int Id { get; set; }
+
+        public string? UserId { get; set; }
         public OrderStatuses Status { get; set; } = OrderStatuses.CREATING;
+
+        public TesteTecnicoUser User { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? FinishedAt { get; set; } = null;
 

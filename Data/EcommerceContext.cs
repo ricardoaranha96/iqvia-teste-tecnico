@@ -1,11 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Reflection.Emit;
+using TesteTecnico.Areas.Identity.Data;
 using TesteTecnico.Models;
 
 namespace TesteTecnico.Data
 {
-    public class EcommerceContext: DbContext
+    public class EcommerceContext: IdentityDbContext<TesteTecnicoUser>
     {
         public EcommerceContext(DbContextOptions<EcommerceContext> options) : base(options)
         {
@@ -17,9 +19,10 @@ namespace TesteTecnico.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Product>().ToTable("Product");
             modelBuilder.Entity<Order>().ToTable("Order");
             modelBuilder.Entity<OrderProduct>().ToTable("OrderProduct");
-        }
+        }        
     }
 }
