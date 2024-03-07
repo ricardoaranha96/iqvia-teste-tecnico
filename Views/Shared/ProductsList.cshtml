@@ -1,0 +1,20 @@
+﻿@model IEnumerable<TesteTecnico.Models.Product>
+
+<div class="d-flex flex-wrap justify-content-center mt-4">
+    @foreach (Product product in Model)
+    {
+        <div class="text-center p-2" style="flex-basis: 25%">
+            <div class="card p-4">
+                <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="text-decoration-none text-reset">
+                    <img src="https://via.placeholder.com/200x200" class="card-img-top" />
+                    <h3 class="card-title mt-3">
+                        @product.Name
+                    </h3>
+                    <div class="card-body">
+                        R$ @product.Price
+                    </div>
+                </a>
+            </div>
+        </div>
+    }
+</div>

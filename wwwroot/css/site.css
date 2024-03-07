@@ -20,3 +20,15 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+header .navbar a{
+    color: white;
+}
+
+.bg-blue {
+    background: #0c7bc0;
+}
+
+.text-purple {
+    color: #140b42;
+}

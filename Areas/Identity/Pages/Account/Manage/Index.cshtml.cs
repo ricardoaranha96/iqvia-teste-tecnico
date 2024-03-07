@@ -62,7 +62,7 @@ namespace TesteTecnico.Areas.Identity.Pages.Account.Manage
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Phone]
-            [Display(Name = "Phone number")]
+            [Display(Name = "Telefone")]
             public string PhoneNumber { get; set; }
         }
 

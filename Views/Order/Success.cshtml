@@ -4,7 +4,7 @@
     ViewData["Title"] = "Pedido Concluído";
 }
 
-<div class="container text-center">
+<div class="container text-center text-purple">
     <h1 class="text-center">Pedido #@Model.Id - @Model.getStatusName()</h1>
     <div>Seu pedido será entregue após a confirmação do pagamento.</div>
     <div><a asp-action="Index" asp-controller="Home">Voltar para o Início</a></div>

@@ -20,7 +20,7 @@
                     </div>
                     <div class="form-floating mb-3">
                         <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
-                        <label asp-for="Input.Password" class="form-label">Password</label>
+                        <label asp-for="Input.Password" class="form-label">Senha</label>
                         <span asp-validation-for="Input.Password" class="text-danger"></span>
                     </div>
                     <div class="checkbox mb-3">
@@ -30,12 +30,10 @@
                         </label>
                     </div>
                     <div>
-                        <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                        <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Login</button>
                     </div>
-                    <div>                        
-                        <p>
-                            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                        </p>                        
+                    <div class="mt-2">                        
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-secondary btn-lg w-100 text-light">Realizar cadastro</a>
                     </div>
                 </form>
             </section>

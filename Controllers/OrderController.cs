@@ -116,6 +116,11 @@ namespace TesteTecnico.Controllers
 
         public IActionResult FinishOrder()
         {
+            if (!_signInManager.IsSignedIn(_httpContextAccessor.HttpContext?.User))
+            {                
+                return Redirect("/Identity/Account/Login");                
+            }
+
             Order order = this.getSessionOrder();
             order.Status = OrderStatuses.AWAITING_PAYMENT;
             order.FinishedAt = DateTime.Now;
