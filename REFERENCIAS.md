@@ -8,3 +8,4 @@
 - Tutorial para rodar aplicação com Local DB no IIS https://blog.medhat.ca/2020/08/deploying-aspnet-core-application-that.html
 - Documentação oficial para publicar aplicações para IIS https://learn.microsoft.com/en-us/aspnet/core/tutorials/publish-to-iis?view=aspnetcore-8.0&tabs=visual-studio
 - Migrations no start da aplicação https://stackoverflow.com/a/70271419
+- Tutorial sobre adicionar Identity a um projeto .NET https://www.youtube.com/watch?v=5X9ogJVWAjE
